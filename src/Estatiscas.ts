@@ -1,3 +1,5 @@
+import countBy from "./countBy.js";
+
 type TransacaoValor = Transacao & { valor: number };
 
 function filtrarValor(transacao: Transacao): transacao is TransacaoValor {
@@ -8,9 +10,13 @@ function filtrarValor(transacao: Transacao): transacao is TransacaoValor {
 export default class Estatiscas {
     private transacoes;
     total;
+    pagamento;
+    status;
     constructor(transacoes: Transacao[]) {
         this.transacoes = transacoes
         this.total = this.setTotal()
+        this.pagamento = this.setPagamento();
+        this.status = this.setStatus();
     }
 
     private setTotal() {
@@ -18,4 +24,14 @@ export default class Estatiscas {
             return acc + item.valor
         }, 0)
     }
+
+    private setPagamento() {
+        return countBy(this.transacoes.map(({ pagamento }) => pagamento))
+
+    }
+    private setStatus() {
+        return countBy(this.transacoes.map(({ status }) => status))
+
+    }
+
 }

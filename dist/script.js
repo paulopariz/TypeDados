@@ -18,7 +18,7 @@ function preencherEstatisticas(transacoes) {
             currency: "BRL"
         });
     }
-    console.log(data.total);
+    console.log(data);
 }
 function preencherTabela(transacoes) {
     const tabela = document.querySelector("#transacoes tbody");

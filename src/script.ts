@@ -26,7 +26,7 @@ function preencherEstatisticas(transacoes: Transacao[]): void {
             currency: "BRL"
         })
     }
-    console.log(data.total)
+    console.log(data)
 }
 
 
