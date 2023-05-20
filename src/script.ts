@@ -1,4 +1,5 @@
 import Estatiscas from "./Estatiscas.js";
+import { CountList } from "./countBy.js";
 import fetchData from "./fetchData.js";
 import normalizarTransacao from "./normalizarTransacao.js";
 
@@ -15,9 +16,31 @@ async function handleData() {
 }
 
 
+function preencherLista(lista: CountList, containerId: string): void {
+    const containerElement = document.getElementById(containerId)
+    if (containerElement) {
+        Object.keys(lista).forEach(key => {
+            containerElement.innerHTML += `<p>${key}: ${lista[key]}</p>`
+        });
+    }
+}
+
 
 function preencherEstatisticas(transacoes: Transacao[]): void {
     const data = new Estatiscas(transacoes)
+    console.log(data);
+
+
+    preencherLista(data.pagamento, "pagamento")
+    preencherLista(data.status, "status")
+
+    const pagamentoElement = document.getElementById("pagamento")
+    if (pagamentoElement) {
+        Object.keys(data.pagamento).forEach(key => {
+            pagamentoElement.innerHTML += `<p>${key}: ${data.pagamento[key]}</p>`
+        });
+    }
+
 
     const totalElement = document.querySelector<HTMLElement>("#total span")
     if (totalElement) {
@@ -26,7 +49,6 @@ function preencherEstatisticas(transacoes: Transacao[]): void {
             currency: "BRL"
         })
     }
-    console.log(data)
 }
 
 
@@ -37,14 +59,13 @@ function preencherTabela(transacoes: Transacao[]): void {
 
     transacoes.forEach(transacao => {
         tabela.innerHTML += `
-            <tr>
-                <td>${transacao.nome}</td>
-                <td>${transacao.email}</td>
-                <td>R$ ${transacao.moeda}</td>
-                <td>${transacao.pagamento}</td>
-                <td>${transacao.status}</td>
-            </tr>
-        `
+                <tr>
+                    <td>${transacao.nome}</td>
+                    <td> ${transacao.email}</td>
+                    <td>R$ ${transacao.moeda}</td>
+                    <td>${transacao.pagamento}</td>
+                    <td>${transacao.status}</td>
+                </tr>`
     })
 }
 
